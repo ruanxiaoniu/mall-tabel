@@ -1,0 +1,155 @@
+{
+  "product": [
+    {
+      "goods_name": "哇哈哈",
+      "sell_price": 3,
+      "goods_type": "饮料",
+      "goods_descript": "非常好喝",
+      "nums": 2000,
+      "sell_count": 900,
+      "goods_pic": "",
+      "goods_stock": 100,
+      "id": 2
+    },
+    {
+      "goods_name": "巧克力",
+      "sell_price": "50",
+      "goods_type": "巧克力",
+      "goods_descript": "好吃",
+      "nums": "2000",
+      "sell_count": "500",
+      "goods_pic": [],
+      "goods_stock": "1000",
+      "id": 3
+    },
+    {
+      "goods_name": "牛奶",
+      "sell_price": "40",
+      "goods_type": "牛奶类",
+      "goods_descript": "伊利牛奶",
+      "nums": "10000",
+      "sell_count": "1000",
+      "goods_pic": [],
+      "goods_stock": "900",
+      "id": 5
+    },
+    {
+      "goods_name": "aa",
+      "sell_price": "",
+      "goods_type": "bb",
+      "goods_descript": "cc",
+      "nums": "",
+      "sell_count": "",
+      "goods_pic": [],
+      "goods_stock": "",
+      "id": 6
+    }
+  ],
+  "address": [
+    {
+      "user_id": 1,
+      "u_name": "runayaolan",
+      "con_address": "广东省肇庆市端州区",
+      "con_name": "zhangshanrui",
+      "con_phone": "13556512184",
+      "con_postcode": "525346",
+      "con_city": "肇庆市"
+    },
+    {
+      "user_id": 2,
+      "u_name": "songyiyun",
+      "con_address": "广东省肇庆市端州区",
+      "con_name": "zhangshanrui",
+      "con_phone": "13556512184",
+      "con_postcode": "525346",
+      "con_city": "肇庆市"
+    }
+  ],
+  "manager": [
+    {
+      "m_name": "ruanyaolan",
+      "m_pwd": "123456"
+    }
+  ],
+  "order": [
+    {
+      "id": 2,
+      "user_id": 1,
+      "goods_id": 2,
+      "order_date": "2019-4-25",
+      "order_state": "未付款"
+    },
+    {
+      "id": 3,
+      "user_id": 2,
+      "goods_id": 2,
+      "order_date": "2019-4-25",
+      "order_state": "未付款"
+    },
+    {
+      "id": 4,
+      "user_id": 3,
+      "goods_id": 3,
+      "order_date": "2019-4-25",
+      "order_state": "已付款"
+    }
+  ],
+  "remark": [
+    {
+      "id": 1,
+      "user_id": 1,
+      "goods_name": "哇哈哈",
+      "remark_content": "赞赞赞",
+      "remark_star": "5",
+      "delete": 0,
+      "time": "2019-04-23 21:43:00"
+    },
+    {
+      "id": 2,
+      "user_id": 2,
+      "goods_name": "威化饼",
+      "remark_content": "好吃",
+      "remark_star": "3",
+      "delete": 0,
+      "time": "2019-04-23 21:43:00"
+    }
+  ],
+  "user": [
+    {
+      "u_name": "runayaolan",
+      "u_pwd": "123456"
+    }
+  ],
+  "user_info": [
+    {
+      "id": 2,
+      "user_id": 2,
+      "truename": "宋逸云",
+      "address": "广东省肇庆市端州区肇庆学院",
+      "postcode": "525340",
+      "birthday": "19970920",
+      "phone": "13556512184",
+      "email": "2317735669@qq.com"
+    },
+    {
+      "id": 3,
+      "user_id": 3,
+      "truename": "吴楚欣",
+      "address": "广东省肇庆市端州区肇庆学院",
+      "postcode": "525340",
+      "birthday": "19970920",
+      "phone": "13556512184",
+      "email": "2317735669@qq.com"
+    },
+    {
+      "id": 4,
+      "user_id": 4,
+      "truename": "章善瑞",
+      "address": "广东省肇庆市端州区肇庆学院",
+      "postcode": "525340",
+      "birthday": "19970920",
+      "phone": "13556512184",
+      "email": "2317735669@qq.com"
+    }
+  ]
+}
