@@ -1,14 +1,16 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-
 const Comment = ()=>import('@/components/Comment')
 const Order = ()=>import('@/components/Order')
 const UserInfo = ()=>import('@/components/UserInfo')
 const AddGoods = ()=>import('@/components/AddGoods')
 const Goods = ()=>import('@/components/Goods')
+const Register = ()=>import('@/components/Register')
+const UpdatePassword = ()=>import('@/components/UpdatePassword')
+
 
 const Login = ()=>import('@/Login')
-const Index = ()=>import('@/Index')
+const Home = ()=>import('@/Home')
 Vue.use(Router)
 export default new Router({
 
@@ -20,42 +22,42 @@ export default new Router({
       component:Login,
     },
     {
-      path:'/index',
-      component:Index,
+      path:'/home',
+      component:Home,
       children:[
         {
           path:'/goods',
-          // meta:{
-          //   requireAuth:true,//需要登录
-          // },
+          meta:{
+            requireAuth:true,//需要登录
+          },
           component:Goods
         },
         {
           path:'/goods/addGoods',
-          // meta:{
-          //   requireAuth:true,//需要登录
-          // },
+          meta:{
+            requireAuth:true,//需要登录
+          },
           component:AddGoods
         },
         {
           path:'/userInfo',
-          // meta:{
-          //   requireAuth:true,//需要登录
-          // },
+          meta:{
+            requireAuth:true,//需要登录
+          },
           component:UserInfo
         },
         {
           path:'/order',
-          // meta:{
-          //   requireAuth:true,//需要登录
-          // },
+          meta:{
+            requireAuth:true,//需要登录
+          },
           component:Order,
        },
        {
         path:'/comment',
-        // meta:{
-        //   requireAuth:true,//需要登录
-        // },
+        meta:{
+          requireAuth:true,//需要登录
+        },
         component:Comment
        },
       ]
@@ -64,9 +66,17 @@ export default new Router({
       path:'/login',
       component:Login,
     },
+    {
+      path:'/register',
+      component:Register,
+    },
+    {
+      path:'/updatePassword',
+      component:UpdatePassword,
+    }
   ]
 });
-// router.beforeEach((to, from, next) => {
+// Router.beforeEach((to, from, next) => {
 //   // to and from are both route objects. must call `next`.
 //   if (to.meta.requireAuth) {  // 判断该路由是否需要登录权限
 //     if (store.state.token) {  // 通过vuex state获取当前的token是否存在
