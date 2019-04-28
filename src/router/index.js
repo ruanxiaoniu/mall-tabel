@@ -12,7 +12,7 @@ const UpdatePassword = ()=>import('@/components/UpdatePassword')
 const Login = ()=>import('@/Login')
 const Home = ()=>import('@/Home')
 Vue.use(Router)
-export default new Router({
+const router= new Router({
 
   mode: 'history',
   routes: [
@@ -24,40 +24,43 @@ export default new Router({
     {
       path:'/home',
       component:Home,
+      // meta:{
+      //   requireAuth:true,//需要登录
+      // },
       children:[
         {
           path:'/goods',
-          meta:{
-            requireAuth:true,//需要登录
-          },
-          component:Goods
+          // meta:{
+          //   requireAuth:true,//需要登录
+          // },
+           component:Goods
         },
         {
           path:'/goods/addGoods',
-          meta:{
-            requireAuth:true,//需要登录
-          },
+          // meta:{
+          //   requireAuth:true,//需要登录
+          // },
           component:AddGoods
         },
         {
           path:'/userInfo',
-          meta:{
-            requireAuth:true,//需要登录
-          },
+          // meta:{
+          //   requireAuth:true,//需要登录
+          // },
           component:UserInfo
         },
         {
           path:'/order',
-          meta:{
-            requireAuth:true,//需要登录
-          },
+          // meta:{
+          //   requireAuth:true,//需要登录
+          // },
           component:Order,
        },
        {
         path:'/comment',
-        meta:{
-          requireAuth:true,//需要登录
-        },
+        // meta:{
+        //   requireAuth:true,//需要登录
+        // },
         component:Comment
        },
       ]
@@ -76,7 +79,7 @@ export default new Router({
     }
   ]
 });
-// Router.beforeEach((to, from, next) => {
+// router.beforeEach((to, from, next) => {
 //   // to and from are both route objects. must call `next`.
 //   if (to.meta.requireAuth) {  // 判断该路由是否需要登录权限
 //     if (store.state.token) {  // 通过vuex state获取当前的token是否存在
@@ -93,3 +96,4 @@ export default new Router({
 //     next();
 // }
 // })
+export default router
