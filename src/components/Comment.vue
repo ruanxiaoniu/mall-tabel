@@ -3,11 +3,13 @@
      <el-card class="box-card">
       <div slot="header" class="clearfix">
         <span style="font-size:20px;font-weight:bolder">用户评价</span>
-        <el-button type="danger" icon="el-icon-delete" style="float: right; " circle></el-button>
+        <el-button type="danger" icon="el-icon-delete" style="float: right; " circle @click="deleteSelection"></el-button>
       </div>
       <div class="text item">
         <el-table
+        :row-class-name="tableRowClassName"
         :data="tableData"
+        @selection-change="handleSelectionChange"
         style="width: 100%"
         >
           <el-table-column
@@ -58,13 +60,15 @@ export default {
       value:[
         
       ],
-      count:0
+      count:0,
+      multipleSelection: [],
+      baseUrl:'http://localhost:3000'
     }
     
   },
   created() {
     let _this=this;
-     _this.axios.get("http://localhost:3000/remark")
+     _this.axios.get(this.baseUrl+"/remark")
     .then(res => {
       _this.tableData = res.data;
       for(var i=0;i<_this.tableData.length;i++){
@@ -77,7 +81,7 @@ export default {
      //删除评论
      deleteComment(index, rows){
      let _this = this;
-    _this.axios.delete("http://localhost:3000/remark/"+rows[index].id)
+    _this.axios.delete(this.baseUrl+"/remark/"+rows[index].id)
     .then(res => {
         _this.tableData.splice(index,1)
         console.log(res.data)
@@ -85,6 +89,29 @@ export default {
     .catch(function (error) {
         console.log(error);
      });
+     },
+
+     //批量删除
+     deleteSelection(){
+        let l=this.multipleSelection.length
+        let _this=this
+          for(var i=0;i<l;i++){
+            let index=_this.multipleSelection[i].index
+              console.log("id="+_this.multipleSelection[i].id)
+            _this.axios.delete(this.baseUrl+"/remark/"+_this.multipleSelection[i].id)
+            .then(res=>{
+                 _this.tableData.splice(index,l)
+                console.log(res.data)
+            })
+          }
+     },
+     //存储已选择项
+     handleSelectionChange(val){
+       this.multipleSelection=val
+     },
+     //存储行索引
+     tableRowClassName({row,rowIndex}){
+       row.index=rowIndex
      }
   },
 }

@@ -10,10 +10,12 @@
         clearable>
         </el-input>
         <el-button type="primary" icon="el-icon-search">查询</el-button>
-        <el-button type="danger" icon="el-icon-delete" style="margin-left:10%">删除</el-button>
+        <el-button type="danger" icon="el-icon-delete" style="margin-left:10%" @click="deleteSelection">删除</el-button>
     </div >
     <el-table
       :data="tableData"
+      :row-class-name="tableRowClassName"
+      @selection-change="handleSelectionChange"
       stripe
       style="width:100%,fit:true"
       border
@@ -71,15 +73,17 @@
      {key: "选项三", value: "已付款"},
      {key: "选项四", value: "未付款"},
     ],
-    val3: [],
+      val3: [],
       name: '',
       price: '',
       input:'',
+      multipleSelection: [],
+      baseUrl:'http://localhost:3000'
     }
     },
     created() {
       let _this = this;
-      _this.axios.get("http://localhost:3000/order")
+      _this.axios.get(this.baseUrl+"/order")
       .then(res => {
           _this.tableData = res.data;
           console.log(res.log)
@@ -89,7 +93,7 @@
       //删除订单
      deleteOrder(index, rows){
         let _this = this;
-        _this.axios.delete("http://localhost:3000/order/"+rows[index].id)
+        _this.axios.delete(this.baseUrl+"/order/"+rows[index].id)
     .then(res => {
         _this.tableData.splice(index,1)
         console.log(res.data)
@@ -97,7 +101,31 @@
     .catch(function (error) {
         console.log(error);
     });
-   }
+   },
+   //批量删除
+    deleteSelection(){
+        let l=this.multipleSelection.length
+        let _this=this
+        console.log(l)
+          for(var i=0;i<l;i++){
+            let index=_this.multipleSelection[i].index
+              //  console.log("id="+_this.multipleSelection[i].id)
+            _this.axios.delete(this.baseUrl+"/order/"+_this.multipleSelection[i].id)
+            .then(res=>{
+                 _this.tableData.splice(index,l)
+                console.log(res.data)
+            })
+          }
+     },
+   //存储行索引
+   tableRowClassName({row,rowIndex}){
+     row.index=rowIndex
+   },
+   //存储已选择项
+    handleSelectionChange(val){
+      this.multipleSelection=val
+    },
+    
   },
 }
 </script>

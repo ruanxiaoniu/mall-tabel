@@ -10,13 +10,15 @@
         clearable>
         </el-input>
         <el-button type="primary" icon="el-icon-search">查询</el-button>
-        <el-button type="danger" icon="el-icon-delete" style="margin-left:20%">删除</el-button>
+        <el-button type="danger" icon="el-icon-delete" style="margin-left:20%" @click="deleteSelection">删除</el-button>
     </div >
     <el-table
       :data="tableData"
+      :row-class-name="tableRowClassName"
       stripe
       style="width:100%,fit:true"
       border
+      @selection-change="handleSelectionChange"
       >
     <el-table-column
     type="selection"
@@ -74,14 +76,16 @@
      {key: "选项三", value: "手机号"},
     ],
     val3: [],
-      name: '',
-      price: '',
-      input:'',
+    name: '',
+    price: '',
+    input:'',
+    multipleSelection: [],
+    baseUrl:'http://localhost:3000'
     }
     },
     created() {
       let _this = this;
-      _this.axios.get("http://localhost:3000/user_info")
+      _this.axios.get(this.baseUrl+"/user_info")
       .then(res => {
           _this.tableData = res.data;
           console.log(res.log)
@@ -91,7 +95,7 @@
         //删除用户信息
         deleteUserInfo(index, rows){
           let _this = this;
-            _this.axios.delete("http://localhost:3000/user_info/"+rows[index].id)
+            _this.axios.delete(this.baseUrl+"/user_info/"+rows[index].id)
         .then(res => {
             _this.tableData.splice(index,1)
             console.log(res.data)
@@ -99,6 +103,28 @@
         .catch(function (error) {
             console.log(error);
         });
+      },
+      //批量删除
+      deleteSelection(row){
+        let l=this.multipleSelection.length
+        let _this=this
+          for(var i=0;i<l;i++){
+            let index=_this.multipleSelection[i].index
+              console.log("id="+_this.multipleSelection[i].id)
+            _this.axios.delete(this.baseUrl+"/user_info/"+_this.multipleSelection[i].id)
+            .then(res=>{
+                 _this.tableData.splice(index,l)
+                console.log(res.data)
+            })
+          }
+      },
+      //存储已选择所有象
+      handleSelectionChange(val){
+        this.multipleSelection = val;
+      },
+      //储存行所所引，供批量删除使用
+      tableRowClassName({row,rowIndex}){
+           row.index=rowIndex
       }
   },
 }

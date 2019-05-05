@@ -17,7 +17,8 @@
       </div >
         <el-table
         :data="tableData"
-        ref="multipleSelection"
+        :row-class-name="tableRowClassName"
+        @selection-change="handleSelectionChange"
         stripe
         style="width:100%,fit:true"
         border>
@@ -118,22 +119,29 @@ export default {
       console.log(error);
     });
   },
+  //存储选择项
+  handleSelectionChange(val){
+    this.multipleSelection=val
+    console.log("rrr"+this.multipleSelection)
+  },
+  //存储行索引
+  tableRowClassName({row,rowIndex}){
+    row.index=rowIndex
+  },
   batchDelete(){
-      let  multData = this.multipleSelection;
-      let  t =this.tableData;
-      let  multDataLen = multData.length;
-      let  tLen = t.length;
-      console.log(tLen);   
-      for(let i = 0; i < multDataLen ;i++){ 
-          for(let y=0;y < tLen;y++){
-              if(JSON.stringify(t[y]) == JSON.stringify(multData[i])){  //判断是否相等，相等就删除
-                //this.tableData.splice(y,1)S
-                alert(t[y])
-              }
+    let l=this.multipleSelection.length
+        let _this=this
+          for(var i=0;i<l;i++){
+            let index=_this.multipleSelection[i].index
+              console.log("id="+_this.multipleSelection[i].id)
+            _this.axios.delete(this.baseUrl+"/goods/"+_this.multipleSelection[i].id)
+            .then(res=>{
+                 _this.tableData.splice(index,l)
+                console.log(res.data)
+            })
           }
-      }
-    }
   }
+}
 }
 </script>
 
