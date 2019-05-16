@@ -29,44 +29,78 @@
         <el-table-column
           prop="name"
           label="商品名"
-          width="250" >
+          width="200" >
+           <template slot-scope="{row,$index}">
+              <el-input v-if="showEdit[$index]" v-model="row.name" style="margin-left:0px;width:80px !important;"></el-input>
+              <span v-if="!showEdit[$index]">{{row.name}}</span>
+            </template>
         </el-table-column>
+           
         <el-table-column
           prop="gtid"
           label="商品总类名称"
           width="110" >
+          <template slot-scope="{row,$index}">
+              <el-input v-if="showEdit[$index]" v-model="row.gtid" style="margin-left:0px;width:80px !important;"></el-input>
+              <span v-if="!showEdit[$index]">{{row.gtid}}</span>
+            </template>
         </el-table-column>
+           
         <el-table-column
           prop="descript"
           label="商品介绍信息"
           width="200">
+           <template slot-scope="{row,$index}">
+              <el-input v-if="showEdit[$index]" v-model="row.descript" style="margin-left:0px;width:100px !important;"></el-input>
+              <span v-if="!showEdit[$index]">{{row.descript}}</span>
+            </template>
         </el-table-column>
+           
         <el-table-column
           prop="price"
           label="价格"
-          width="50">
+          width="80">
+          <template slot-scope="{row,$index}">
+              <el-input v-if="showEdit[$index]" v-model="row.price" style="margin-left:0px;width:50px !important;"></el-input>
+              <span v-if="!showEdit[$index]">{{row.price}}</span>
+            </template>
         </el-table-column>
+            
         <el-table-column
           prop="stock"
           label="商品剩余库存"
           width="110" >
+            <template slot-scope="{row,$index}">
+              <el-input v-if="showEdit[$index]" v-model="row.stock" style="margin-left:0px;width:80px !important;"></el-input>
+              <span v-if="!showEdit[$index]">{{row.stock}}</span>
+            </template>
         </el-table-column>
+          
         <el-table-column
           prop="sold"
           label="销售数量"
-          width="80" >
+          width="100" >
+          <template slot-scope="{row,$index}">
+              <el-input v-if="showEdit[$index]" v-model="row.sold" style="margin-left:0px;width:70px !important;"></el-input>
+              <span v-if="!showEdit[$index]">{{row.sold}}</span>
+            </template>
         </el-table-column>
-        <el-table-column
+        <!-- <el-table-column
           prop="img"
           label="商品图片存放路径"
           width="200" >
-        </el-table-column>
-    
+          <template slot-scope="{row,$index}">
+              <el-input v-if="showEdit[$index]" v-model="row.img" style="margin-left:0px;width:50px !important;"></el-input>
+              <span v-if="!showEdit[$index]">{{row.img}}</span>
+            </template>
+        </el-table-column> -->
         <el-table-column
           label="操作"
-          width="100">
+          width="200">
           <template slot-scope="scope">
-            <el-button  type="text" size="small">编辑</el-button>
+            <el-button  type="text" size="small" @click.native.prevent="Save(scope.$index, tableData)" v-if="showBtn[scope.$index]">保存</el-button>
+            <el-button type="text" size="small" @click.native.prevent="Cancel(scope.$index)" v-if="showBtn[scope.$index]">取消</el-button>
+            <el-button  type="text" size="small" @click.native.prevent="Edit(scope.$index, tableData)" v-if="!showBtn[scope.$index]">编辑</el-button>
             <el-button type="text" size="small" @click.native.prevent="deleteProduct(scope.$index, tableData)">删除</el-button>
           </template>
         </el-table-column>
@@ -98,7 +132,9 @@ export default {
     input:'',
     multipleSelection:[],
     // baseUrl: 'http://172.18.44.25'
-    baseUrl:'http://localhost:3000'
+    baseUrl:'http://localhost:3000',
+     showEdit:[],
+     showBtn:[],
    } 
   },
   created(){
@@ -155,10 +191,42 @@ export default {
             })
           }
   },
-      currentChange(currentPage){
-        this.currentPage=currentPage
-      }
-}
+  currentChange(currentPage){
+    this.currentPage=currentPage
+  },
+  //点击编辑
+  Edit(index,row){
+      this.showEdit[index]=true
+      this.showBtn[index] = true;
+      this.$set(this.showEdit,row,true)
+      this.$set(this.showBtn,row,true)
+  },
+  //取消编辑
+  Cancel(index){
+    this.showEdit[index] = false;
+    this.showBtn[index] = false;
+  },
+  //保存编辑
+  Save(index,rows){
+    let _this=this
+      _this.axios.put(this.baseUrl+"/product/"+rows[index].id,{
+          name:rows[index].name,
+          price:rows[index].price,
+          gtid:rows[index].gtid,
+          descript:rows[index].descript,
+          nums:rows[index].nums,
+          sold:rows[index].sold,
+          goods_pic:rows[index].goods_pic,
+          stock:rows[index].stock,
+          id:rows[index].id,
+      })
+      .then(res=>{
+        _this.showEdit[index] = false;
+        _this.showBtn[index] = false;
+        console.log(res.data)
+      })
+   }
+  }
 }
 </script>
 

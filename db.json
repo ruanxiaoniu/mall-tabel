@@ -1,47 +1,47 @@
 {
   "product": [
     {
-      "name": "哇哈哈",
-      "sell_price": 3,
-      "goods_type": "饮料",
-      "goods_descript": "非常好喝",
+      "name": "哈哈",
+      "price": 3,
+      "gtid": "饮料",
+      "descript": "非常好喝",
       "nums": 2000,
-      "sell_count": 900,
+      "sold": 900,
       "goods_pic": "",
-      "goods_stock": 100,
+      "stock": 100,
       "id": 2
     },
     {
-      "goods_name": "巧克力",
-      "sell_price": "50",
-      "goods_type": "巧克力",
-      "goods_descript": "好吃",
+      "name": "巧克力",
+      "price": "50",
+      "gtid": "巧克力",
+      "descript": "好吃",
       "nums": "2000",
-      "sell_count": "500",
+      "sold": "500",
       "goods_pic": [],
-      "goods_stock": "1000",
+      "stock": "1000",
       "id": 3
     },
     {
-      "goods_name": "牛奶",
-      "sell_price": "40",
-      "goods_type": "牛奶类",
-      "goods_descript": "伊利牛奶",
+      "name": "牛奶",
+      "price": "40",
+      "gtid": "牛奶类",
+      "descript": "伊利牛奶",
       "nums": "10000",
-      "sell_count": "1000",
+      "sold": "1000",
       "goods_pic": [],
-      "goods_stock": "900",
+      "stock": "900",
       "id": 5
     },
     {
-      "goods_name": "aa",
-      "sell_price": "",
-      "goods_type": "bb",
-      "goods_descript": "cc",
+      "name": "aa",
+      "price": "",
+      "gtid": "bb",
+      "descript": "cc",
       "nums": "",
-      "sell_count": "",
+      "sold": "",
       "goods_pic": [],
-      "goods_stock": "",
+      "stock": "",
       "id": 6
     }
   ],
@@ -105,7 +105,7 @@
     {
       "id": 1,
       "user_id": 1,
-      "goods_name": "哇哈哈",
+      "name": "哇哈哈",
       "remark_content": "赞赞赞",
       "remark_star": "5",
       "delete": 0,
@@ -114,7 +114,7 @@
     {
       "id": 2,
       "user_id": 2,
-      "goods_name": "威化饼",
+      "name": "威化饼",
       "remark_content": "好吃",
       "remark_star": "3",
       "delete": 0,
@@ -123,7 +123,7 @@
     {
       "id": 3,
       "user_id": 3,
-      "goods_name": "3",
+      "name": "3",
       "remark_content": "好吃",
       "remark_star": "3",
       "delete": 0,
@@ -132,7 +132,7 @@
     {
       "id": 4,
       "user_id": 4,
-      "goods_name": "4",
+      "name": "4",
       "remark_content": "好吃",
       "remark_star": "4",
       "delete": 0,
@@ -141,7 +141,7 @@
     {
       "id": 5,
       "user_id": 5,
-      "goods_name": "5",
+      "name": "5",
       "remark_content": "好吃",
       "remark_star": "5",
       "delete": 0,
@@ -150,7 +150,7 @@
     {
       "id": 6,
       "user_id": 6,
-      "goods_name": "6",
+      "name": "6",
       "remark_content": "好吃",
       "remark_star": "2",
       "delete": 0,
@@ -159,7 +159,7 @@
     {
       "id": 7,
       "user_id": 7,
-      "goods_name": "7",
+      "name": "7",
       "remark_content": "好吃",
       "remark_star": "3",
       "delete": 0,
@@ -168,7 +168,7 @@
     {
       "id": 8,
       "user_id": 8,
-      "goods_name": "8",
+      "name": "8",
       "remark_content": "好吃",
       "remark_star": "1",
       "delete": 0,
