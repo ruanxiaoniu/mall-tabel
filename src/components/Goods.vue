@@ -16,7 +16,7 @@
       <el-button type="danger" icon="el-icon-delete" @click="batchDelete">删除</el-button>
       </div >
         <el-table
-        :data="tableData"
+        :data="tableData.slice((currentPage-1)*pagesize,currentPage*pagesize)"
         :row-class-name="tableRowClassName"
         @selection-change="handleSelectionChange"
         stripe
@@ -46,12 +46,6 @@
           label="价格"
           width="50">
         </el-table-column>
-     
-      <!-- <el-table-column
-        prop="nums"
-        label="购买数量"
-        width="100" >
-      </el-table-column> -->
         <el-table-column
           prop="stock"
           label="商品剩余库存"
@@ -77,6 +71,11 @@
           </template>
         </el-table-column>
     </el-table>
+    <el-pagination
+    layout="prev, pager, next"
+    @current-change="currentChange"
+    :total="total">
+  </el-pagination>
   </div>
 </template>
 
@@ -90,19 +89,34 @@ export default {
      {key: "选项一", value: "商品名"},
       {key: "选项二", value: "商品总类名称"},
     ],
+     total:0,//默认数据总数
+    pagesize:9,//每页数据的条数
+    currentPage:1,//默认开始的页数
     val3: [],
     name: '',
     price: '',
     input:'',
     multipleSelection:[],
-    baseUrl: 'http://172.18.44.25'
+    // baseUrl: 'http://172.18.44.25'
+    baseUrl:'http://localhost:3000'
    } 
   },
   created(){
     let _this = this;
-    _this.axios.get(this.baseUrl+'/goods')
+    // _this.axios.get(this.baseUrl+'/goods')
+    _this.axios.get(this.baseUrl+'/product')
     .then(res => {
       _this.tableData = res.data;
+       var l=_this.tableData.length
+        if(l<_this.pagesize){
+         _this.total=10
+        }
+        else if((l%_this.pagesize)!=0){
+            _this.total=(parseInt(l/_this.pagesize))*10+10
+          }
+          else{
+            _this.total=(l/_this.pagesize)*10
+          }
       //console.log(res.log)
     })
   },
@@ -140,7 +154,10 @@ export default {
                 console.log(res.data)
             })
           }
-  }
+  },
+      currentChange(currentPage){
+        this.currentPage=currentPage
+      }
 }
 }
 </script>

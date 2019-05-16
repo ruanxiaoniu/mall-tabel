@@ -2,7 +2,7 @@
 <div>
     <div id="operate">
         <el-select v-model="val3" placeholder="请选择搜索条件" >
-            <el-option v-for="item in options" :label="item.value" :value="item.key" :key="item.key"></el-option>
+            <el-option v-for="item in options" :label="item.label" :value="item.value" :key="item.value"></el-option>
         </el-select>
         <el-input
         placeholder="请输入关键字"
@@ -13,7 +13,7 @@
         <el-button type="danger" icon="el-icon-delete" style="margin-left:20%" @click="deleteSelection">删除</el-button>
     </div >
     <el-table
-      :data="tableData"
+      :data="tableData.slice((currentPage-1)*pagesize,currentPage*pagesize)"
       :row-class-name="tableRowClassName"
       stripe
       style="width:100%,fit:true"
@@ -63,6 +63,11 @@
         </template>
     </el-table-column>
   </el-table>
+  <el-pagination
+    layout="prev, pager, next"
+    @current-change="currentChange"
+    :total="total">
+  </el-pagination>
 </div>
 </template>
 <script>
@@ -71,25 +76,83 @@
       return {
       tableData: [],
      options: [
-     {key: "选项一", value: "姓名"},
-     {key: "选项二", value: "地址"},
-     {key: "选项三", value: "手机号"},
+     {value: "truename", label: "姓名"},
+     {value: "address", label: "地址"},
+     {value: "phone", label: "手机号"},
     ],
+    total:0,//默认数据总数
+    pagesize:9,//每页数据的条数
+    currentPage:1,//默认开始的页数
     val3: [],
     name: '',
     price: '',
     input:'',
+    otableData:[],
     multipleSelection: [],
     baseUrl:'http://localhost:3000'
     }
     },
     created() {
       let _this = this;
+      
       _this.axios.get(this.baseUrl+"/user_info")
       .then(res => {
           _this.tableData = res.data;
+          _this.otableData=_this.tableData
+          var l=_this.tableData.length
+          console.log(l)
+          console.log(l%_this.pagesize)
+          if(l<_this.pagesize){
+         _this.total=10
+        }
+        else if((l%_this.pagesize)!=0){
+            _this.total=(parseInt(l/_this.pagesize))*10+10
+          }
+          else{
+            _this.total=(l/_this.pagesize)*10
+          }
+          // _this.total=_this.tableData.length
           console.log(res.log)
+          console.log(_this.total)
       })
+    },
+    watch: {
+      input:function(val,oldVal){
+         if(this.val3==="truename"){
+            this.tableData=this.otableData.filter(item=>(~item.truename.indexOf(val)))
+            var L=this.tableData.length
+            if(L<this.pagesize){
+                this.total=10
+            }
+            else if((L%this.pagesize)!=0){
+                this.total=L+10
+              }else{
+                this.total=L
+              }
+          }else if(this.val3==="address"){
+              this.tableData=this.otableData.filter(item=>(~item.address.indexOf(val)))
+              var L=this.tableData.length
+              if(L<this.pagesize){
+                  this.total=10
+              }
+              else if((L%this.pagesize)!=0){
+                  this.total=L+10
+                }else{
+                  this.total=L
+                }
+            }else if(this.val3==="phone"){
+                this.tableData=this.otableData.filter(item=>(~item.phone.indexOf(val)))
+                var L=this.tableData.length
+                if(L<this.pagesize){
+                    this.total=10
+                }
+                else if((L%this.pagesize)!=0){
+                    this.total=L+10
+                  }else{
+                    this.total=L
+                  }
+            }
+      }
     },
     methods: {
         //删除用户信息
@@ -97,12 +160,42 @@
           let _this = this;
             _this.axios.delete(this.baseUrl+"/user_info/"+rows[index].id)
         .then(res => {
-            _this.tableData.splice(index,1)
-            console.log(res.data)
+          // console.log("index="+index)
+          //   _this.tableData.splice(index,1)
+          //   _this.otableData.splice(index,1)
+          //   _this.tableData=_this.otableData
+          //   // _this.otableData=_this.tableData
+          //   console.log("删除后"+_this.tableData.length)
+          //   _this.otableData=_this.tableData
+          //   this.input=""
+
+          //   console.log(res.data)
+          _this.axios.get(this.baseUrl+"/user_info")
+      .then(res => {
+          _this.tableData = res.data;
+          _this.otableData=_this.tableData
+          var l=_this.tableData.length
+          console.log(l)
+          console.log(l%_this.pagesize)
+          if(l<_this.pagesize){
+         _this.total=10
+        }
+        else if((l%_this.pagesize)!=0){
+            _this.total=(parseInt(l/_this.pagesize))*10+10
+          }
+          else{
+            _this.total=(l/_this.pagesize)*10
+          }
+          // _this.total=_this.tableData.length
+          console.log(res.log)
+          console.log(_this.total)
+      })
         })
+       
         .catch(function (error) {
             console.log(error);
         });
+        
       },
       //批量删除
       deleteSelection(row){
@@ -125,6 +218,9 @@
       //储存行所所引，供批量删除使用
       tableRowClassName({row,rowIndex}){
            row.index=rowIndex
+      },
+      currentChange(currentPage){
+        this.currentPage=currentPage
       }
   },
 }
@@ -163,3 +259,4 @@
   margin-left: 10px;
 }
 </style>
+

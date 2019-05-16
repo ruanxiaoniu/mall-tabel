@@ -92,8 +92,10 @@ export default {
 #left{
   width: 250px;
   float: left;
-  height: 800px; 
-  background-color:#545c64
+  height: 95vh; 
+  bottom: 0;
+  background-color:#545c64;
+  overflow: hidden;
 }
 #center{
   float: left;

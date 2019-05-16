@@ -8,7 +8,7 @@
       <div class="text item">
         <el-table
         :row-class-name="tableRowClassName"
-        :data="tableData"
+        :data="tableData.slice((currentPage-1)*pagesize,currentPage*pagesize)"
         @selection-change="handleSelectionChange"
         style="width: 100%"
         >
@@ -46,6 +46,11 @@
               </template>
           </el-table-column>
         </el-table>
+        <el-pagination
+          layout="prev, pager, next"
+          @current-change="currentChange"
+          :total="total">
+        </el-pagination>
     </div>
    </el-card>
   </div>
@@ -60,6 +65,9 @@ export default {
       value:[
         
       ],
+      total:0,//默认数据总数
+      pagesize:9,//每页数据的条数
+      currentPage:1,//默认开始的页数
       count:0,
       multipleSelection: [],
       baseUrl:'http://localhost:3000'
@@ -74,7 +82,19 @@ export default {
       for(var i=0;i<_this.tableData.length;i++){
         _this.value[i]=parseInt(_this.tableData[i].remark_star) 
       } 
+       var l=_this.tableData.length
+       console.log(l)
+        if(l<_this.pagesize){
+         _this.total=10
+        }
+        else if((l%_this.pagesize)!=0){
+            _this.total=(parseInt(l/_this.pagesize))*10+10
+          }
+          else{
+            _this.total=(l/_this.pagesize)*10
+          }
       console.log(res.data);
+      console.log(_this.total);
     })
   },
   methods: {
@@ -112,7 +132,10 @@ export default {
      //存储行索引
      tableRowClassName({row,rowIndex}){
        row.index=rowIndex
-     }
+     },
+      currentChange(currentPage){
+        this.currentPage=currentPage
+      }
   },
 }
 </script>
