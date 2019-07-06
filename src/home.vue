@@ -24,7 +24,7 @@
               </template>
               <el-menu-item-group>
                 <el-menu-item index="2-1"><router-link to="/goods">查询商品信息</router-link></el-menu-item>
-                <el-menu-item index="2-2"><router-link to="/goods/addGoods">添加商品信息</router-link></el-menu-item>
+                <!-- <el-menu-item index="2-2"><router-link to="/goods/addGoods">添加商品信息</router-link></el-menu-item> -->
               </el-menu-item-group>
             </el-submenu>
             <el-submenu index="3">
@@ -51,8 +51,8 @@
                 <span>账号管理</span>
               </template>
               <el-menu-item-group>
-                <el-menu-item index="5-1">修改密码</el-menu-item>
-                <el-menu-item index="5-2">退出</el-menu-item>
+                <!-- <el-menu-item index="5-1">修改密码</el-menu-item> -->
+                <el-menu-item index="5-2" @click="exit">退出</el-menu-item>
               </el-menu-item-group>
             </el-submenu>
         </el-menu>
@@ -73,7 +73,16 @@ export default {
     }
   },
   methods: {
-    
+    //退出
+    exit(){
+      this.axios.get("/dataLogout")
+      .then(res=>{
+          this.$router.replace({name:'login'})
+      })
+      .catch(error=>{
+
+      })
+    }
   },
  
 }
@@ -92,15 +101,17 @@ export default {
 #left{
   width: 250px;
   float: left;
-  height: 95vh; 
+  height: 100vh; 
   bottom: 0;
   background-color:#545c64;
-  overflow: hidden;
+  /* overflow: hidden; */
+  margin-bottom: 2px;
 }
 #center{
   float: left;
   margin-left: 5%;
   width: auto;
+  margin-bottom: 50px
 }
 .el-col-12 {
     width: 100%;

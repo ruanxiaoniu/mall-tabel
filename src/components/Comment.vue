@@ -3,7 +3,7 @@
      <el-card class="box-card">
       <div slot="header" class="clearfix">
         <span style="font-size:20px;font-weight:bolder">用户评价</span>
-        <el-button type="danger" icon="el-icon-delete" style="float: right; " circle @click="deleteSelection"></el-button>
+        <!-- <el-button type="danger" icon="el-icon-delete" style="float: right; " circle @click="deleteSelection"></el-button> -->
       </div>
       <div class="text item">
         <el-table
@@ -17,17 +17,17 @@
           width="55">
           </el-table-column>
           <el-table-column
-          prop="user_id"
-          label="用户id"
+          prop="user"
+          label="用户"
           width="180">
           </el-table-column>
           <el-table-column
-          prop="goods_name"
+          prop="goods"
           label="商品"
           width="180">
           </el-table-column>
           <el-table-column
-          prop="remark_content"
+          prop="content"
           label="评论内容">
           </el-table-column>
           <el-table-column
@@ -38,13 +38,13 @@
               <el-rate show-text v-model="value[scope.$index]"></el-rate>
             </template>
           </el-table-column>
-          <el-table-column
+          <!-- <el-table-column
           label="操作"
           width="100">
               <template slot-scope="scope">
                 <el-button type="text" size="small" @click.native.prevent="deleteComment(scope.$index, tableData)">删除</el-button>
               </template>
-          </el-table-column>
+          </el-table-column> -->
         </el-table>
         <el-pagination
           layout="prev, pager, next"
@@ -76,11 +76,11 @@ export default {
   },
   created() {
     let _this=this;
-     _this.axios.get(this.baseUrl+"/remark")
+     _this.axios.get("/dataComments")
     .then(res => {
-      _this.tableData = res.data;
+      _this.tableData = res.data.list;
       for(var i=0;i<_this.tableData.length;i++){
-        _this.value[i]=parseInt(_this.tableData[i].remark_star) 
+        _this.value[i]=parseInt(_this.tableData[i].star) 
       } 
        var l=_this.tableData.length
        console.log(l)
@@ -97,7 +97,7 @@ export default {
       console.log(_this.total);
     })
   },
-  methods: {
+  methods: {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
      //删除评论
      deleteComment(index, rows){
      let _this = this;

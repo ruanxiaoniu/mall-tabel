@@ -23,10 +23,11 @@ const router= new Router({
     },
     {
       path:'/home',
+      name:"home",
       component:Home,
-      // meta:{
-      //   requireAuth:true,//需要登录
-      // },
+      meta:{
+        requireAuth:true,//需要登录
+      },
       children:[
         {
           path:'/goods',

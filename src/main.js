@@ -15,9 +15,17 @@ Vue.use(VueAxios, axios)
 Vue.use(ElementUI)
 // Vue.use(http)
 /* eslint-disable no-new */
+axios.defaults.withCredentials=true
+axios.defaults.Header=true
+// axios.defaults.baseURL="http://172.18.44.25:8888"
+axios.defaults.baseURL = '/api'
 new Vue({
   el: '#app',
   router,
   components: { App },
   template: '<App/>'
 })
+import {
+  Dialog,
+} from 'element-ui'
+Vue.use(Dialog)
